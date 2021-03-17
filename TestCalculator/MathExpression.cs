@@ -127,9 +127,10 @@ namespace TestCalculator
             for (var i = 0; i < _expression.Length; i++)
             {
                 _indexOfCurrentSymbol = i;
-                _previousSymbol = _expression[i - 1];
                 _currentSymbol = _expression[i];
-                _nextSymbol = _expression[i + 1];
+
+                if (i > 0) _previousSymbol = _expression[i - 1];
+                if (i < _expression.Length - 1) _nextSymbol = _expression[i + 1];
 
                 if (!SymbolValidation()) return;
 
@@ -270,11 +271,14 @@ namespace TestCalculator
         /// </returns>
         private bool CheckSymbolSequence()
         {
-            if (!ContentOfSymbolInList(_previousSymbol, ConsistentSymbols) &&
-                !ContentOfSymbolInList(_currentSymbol, ConsistentSymbols)) return false;
+            if (ContentOfSymbolInList(_previousSymbol, ConsistentSymbols) &&
+                ContentOfSymbolInList(_currentSymbol, ConsistentSymbols))
+            {
+                ExpressionErrorHandler($"Invalid order of elements: {_previousSymbol} and {_currentSymbol}");
+                return true;
+            }
 
-            ExpressionErrorHandler($"Invalid order of elements: {_previousSymbol} and {_currentSymbol}");
-            return true;
+            return false;
         }
 
         /// <summary>

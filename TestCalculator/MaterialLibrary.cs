@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace TestCalculator
 {
-    public class MaterialLibrary
+    public static class MaterialLibrary
     {
         public static string ValidSymbols => "0123456789+-*/().,";
         public static string SymbolsToStart => "+-(1234567890.,";
@@ -15,6 +15,7 @@ namespace TestCalculator
         public static string SpecialSymbolsAfterCloseBound => "0123456789(";
         public static string ProhibitedSymbolsBeforeCloseBound => "+-*/.,";
         public static string ConsistentSymbols => "+-*/.,";
+
         public static Dictionary<string, int> OperatorValues { get; } = new Dictionary<string, int>
         {
             {"(", 0},
@@ -24,7 +25,7 @@ namespace TestCalculator
             {"*", 3},
             {"/", 3}
         };
-        
+
         public static readonly Dictionary<string, Func<string, string, string>> Operations =
             new Dictionary<string, Func<string, string, string>>
             {
@@ -34,7 +35,7 @@ namespace TestCalculator
                 {"/", (x, y) => (double.Parse(x) / double.Parse(y)).ToString()}
             };
     }
-    
+
     public struct Element
     {
         public EType Type;

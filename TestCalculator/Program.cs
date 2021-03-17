@@ -2,28 +2,29 @@
 
 namespace TestCalculator
 {
-    class Program
+    internal static class Program
     {
-        static void Main(string[] args)
+        static void Main()
         {
             do
             {
-                Console.WriteLine("Введите выражение:");
+                Console.WriteLine("Enter expression:");
 
                 var expression = Console.ReadLine();
-                var result = "0.0";
 
-                try
+                var calculator = new Calculator();
+                var result = calculator.Calculate(expression);
+
+                if (double.TryParse(result, out double validResult))
                 {
-                    
+                    ShowResult("Answer: " + Math.Round(validResult, 2));
                 }
-                catch (ArgumentException exception)
+                else
                 {
-                    ShowResult(exception.Message);
-                    continue;
+                    ShowResult(result);
                 }
 
-                ShowResult("Ответ: " + Math.Round(double.Parse(result), 2));
+                
             } while (IsContinue());
         }
         
@@ -47,8 +48,8 @@ namespace TestCalculator
         {
             Console.WriteLine("********");
             Console.WriteLine(answer);
-            Console.WriteLine("Нажмите Enter для продолжения.");
-            Console.WriteLine("Нажмите ESC для выхода.");
+            Console.WriteLine("Press Enter to continue.");
+            Console.WriteLine("Press ESC to exit.");
             Console.WriteLine("********");
         }
     }
